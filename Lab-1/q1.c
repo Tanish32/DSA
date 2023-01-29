@@ -59,17 +59,20 @@ int getB()
     // To get sum of submatrix or cancel and print not possible
     int ri, ci, rh, ch;
     scanf("%d %d %d %d", &ri, &ci, &rh, &ch);
-        //To check submatrix can be determined
-    if(ri+rh>m || ci+ch>n){
+    // To check submatrix can be determined
+    if (ri + rh > m || ci + ch > n)
+    {
         printf("NOT POSSIBLE");
         return 0;
-        //if submatrix is determinable
     }
+    // if submatrix is determinable
+    int sum = 0;
     for (int i = ri; i < ri + rh; i++)
     {
         for (int j = ci; j < ci + ch; j++)
         {
-            
+            sum += matrixResult[i][j];
         }
     }
+    printf("\n%d", sum);
 }
