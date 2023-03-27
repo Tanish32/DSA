@@ -1,20 +1,42 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-int main()
-{
-    int n, temp, m;
-    cin >> n;
-    priority_queue<int> pq;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> temp;
-        pq.push(temp);
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+};
+Node* newNode(int data){
+    Node* node = new Node();
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    return (node);
+}
+void kthLargestUtil(Node* root, int k, int& c){
+    if (root == NULL || c >= k) return;
+    kthLargestUtil(root->right, k, c);
+    c++;
+    if (c == k) {
+        cout << "K'th largest element is " << root->data << endl;
+        return;
     }
-    cin >> m;
-    for (int i = 1; i < m; i++)
-    {
-        pq.pop();
-    }
-    cout << pq.top();
+    kthLargestUtil(root->left, k, c);
+}
+void kthLargest(Node* root, int k){
+    int c = 0;
+    kthLargestUtil(root, k, c);
+}
+int main(){
+    Node* root = newNode(50);
+    root->left = newNode(30);
+    root->right = newNode(70);
+    root->left->left = newNode(20);
+    root->left->right = newNode(40);
+    root->right->left = newNode(60);
+    root->right->right = newNode(80);
+ 
+    int k = 3;
+    kthLargest(root, k);
+ 
     return 0;
 }
