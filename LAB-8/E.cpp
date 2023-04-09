@@ -13,6 +13,7 @@ void compute(int n, int m, int k, vector<int> arr)
         }
         if (i >= m - 1)
         {
+            //here --mp.end() works but mp.end()-1 won't work
             auto lastElement = --mp.end();
             while (lastElement->second != k)
             {
