@@ -20,9 +20,11 @@ string compute(int n, string A)
     }
     else
     {
+        //erase(index, length)
         A.erase(n / 2, 1);
         n--;
         palindromise(n, A);
+        //inser(index, frequency, character)
         A.insert(n / 2, 1, A[n / 2]);
         return A;
     }
