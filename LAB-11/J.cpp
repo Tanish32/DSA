@@ -1,43 +1,51 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <map>
 using namespace std;
-bool checkSum(int k, vector<int> v, unordered_map<int, bool> mp)
+bool compute(int n, int k, int index, vector<int> v, map<pair<int, int>, bool> &mp)
 {
-    if (mp[k] == true)
+    // memoization
+    if (mp.find({index, k}) != mp.end())
     {
-        return true;
+        return mp[{index, k}];
     }
+    //  Base Case
     if (k == 0)
-        return true;
-    else if (k < 0)
-        return false;
-    for (int i = 0; i < v.size(); i++)
     {
-        vector<int> temp;
-        for (auto it : v)
+        return true;
+    }
+    else if (k < 0)
+    {
+        return false;
+    }
+    // Recursive procedure
+    vector<bool> temp;
+    for (int i = index; i < n; i++)
+    {
+        temp.push_back(compute(n, k - v[i], i + 1, v, mp));
+    }
+    for (auto it : temp)
+    {
+        if (it == true)
         {
-            if (it != v[i])
-            {
-                temp.push_back(it);
-            }
-        }
-        if (checkSum(k - v[i], temp, mp) == true)
-        {
-            mp[k] = true;
-            return mp[k];
+            mp[{index, k}] = true;
+            return true;
         }
     }
+    temp.clear();
+    mp[{index, k}] = false;
     return false;
 }
 int main()
 {
-    int n, k;
+    int n, k, index = 0;
     cin >> n >> k;
+    map<pair<int, int>, bool> mp;
     vector<int> v(n);
-    unordered_map<int, bool> mp;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
     }
-    cout << checkSum(k, v, mp);
+    cout << compute(n, k, index, v, mp);
     return 0;
 }
